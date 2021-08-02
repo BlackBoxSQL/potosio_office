@@ -259,7 +259,7 @@ class Address(models.Model):
     # TODO: Define custom methods here
 
 
-class Location(models.Model):
+class GPSLocation(models.Model):
     """Model definition for Location."""
 
     # TODO: Define fields here
@@ -272,47 +272,74 @@ class Location(models.Model):
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     class Meta:
-        """Meta definition for Location."""
+        """Meta definition for GPSLocation."""
 
-        verbose_name = 'Location'
-        verbose_name_plural = 'Locations'
+        verbose_name = 'GPSLocation'
+        verbose_name_plural = 'GPSLocations'
 
     def __str__(self):
-        """Unicode representation of Location."""
+        """Unicode representation of GPSLocation."""
         pass
 
     def save(self):
-        """Save method for Location."""
+        """Save method for GPSLocation."""
         pass
 
     def get_absolute_url(self):
-        """Return absolute url for Location."""
+        """Return absolute url for GPSLocation."""
         return ('')
 
     # TODO: Define custom methods here
 
 
-class CommonInformation(models.Model):
-    """Model definition for CommonInformation."""
+class SecurityInformation(models.Model):
+    """Model definition for SecurityInformation."""
+
+    # TODO: Define fields here
+    nid = models.CharField(max_length=17)
+
+    class Meta:
+        """Meta definition for SecurityInformation."""
+
+        verbose_name = 'SecurityInformation'
+        verbose_name_plural = 'SecurityInformations'
+
+    def __str__(self):
+        """Unicode representation of SecurityInformation."""
+        pass
+
+    def save(self):
+        """Save method for SecurityInformation."""
+        pass
+
+    def get_absolute_url(self):
+        """Return absolute url for SecurityInformation."""
+        return ('')
+
+    # TODO: Define custom methods here
+
+
+class PersonalInformation(models.Model):
+    """Model definition for PersonalInformation."""
 
     # TODO: Define fields here
 
     class Meta:
-        """Meta definition for CommonInformation."""
+        """Meta definition for PersonalInformation."""
 
-        verbose_name = 'CommonInformation'
-        verbose_name_plural = 'CommonInformations'
+        verbose_name = 'PersonalInformation'
+        verbose_name_plural = 'PersonalInformations'
 
     def __str__(self):
-        """Unicode representation of CommonInformation."""
+        """Unicode representation of PersonalInformation."""
         pass
 
     def save(self):
-        """Save method for CommonInformation."""
+        """Save method for PersonalInformation."""
         pass
 
     def get_absolute_url(self):
-        """Return absolute url for CommonInformation."""
+        """Return absolute url for PersonalInformation."""
         return ('')
 
     # TODO: Define custom methods here
