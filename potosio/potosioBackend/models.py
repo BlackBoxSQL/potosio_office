@@ -7,10 +7,11 @@ class PhotographerType(models.Model):
     """Model definition for PhotographerType."""
 
     # TODO: Define fields here
+    photographer_type = models.CharField(max_length=10)
 
     class Meta:
         """Meta definition for PhotographerType."""
-
+        db_table = 'photographer_type'
         verbose_name = 'PhotographerType'
         verbose_name_plural = 'PhotographerTypes'
 
@@ -26,18 +27,17 @@ class PhotographerType(models.Model):
         """Return absolute url for PhotographerType."""
         return ('')
 
-    # TODO: Define custom methods here
-
 
 class PhotographyType(models.Model):
 
     """Model definition for PhotographyType."""
 
     # TODO: Define fields here
+    photography_type = models.CharField(max_length=30)
 
     class Meta:
         """Meta definition for PhotographyType."""
-
+        db_table = 'photography_type'
         verbose_name = 'PhotographyType'
         verbose_name_plural = 'PhotographyTypes'
 
@@ -53,30 +53,29 @@ class PhotographyType(models.Model):
         """Return absolute url for PhotographyType."""
         return ('')
 
-    # TODO: Define custom methods here
 
-
-class CameraManufacturer(models.Model):
-    """Model definition for CameraManufacturer."""
+class CameraBrand(models.Model):
+    """Model definition for CameraBrand."""
 
     # TODO: Define fields here
+    brand = models.CharField(max_length=50)
 
     class Meta:
-        """Meta definition for CameraManufacturer."""
-
-        verbose_name = 'CameraManufacturer'
-        verbose_name_plural = 'CameraManufacturers'
+        """Meta definition for CameraBrand."""
+        db_table = 'camera_brand'
+        verbose_name = 'CameraBrand'
+        verbose_name_plural = 'CameraBrands'
 
     def __str__(self):
-        """Unicode representation of CameraManufacturer."""
+        """Unicode representation of CameraBrand."""
         pass
 
     def save(self):
-        """Save method for CameraManufacturer."""
+        """Save method for CameraBrand."""
         pass
 
     def get_absolute_url(self):
-        """Return absolute url for CameraManufacturer."""
+        """Return absolute url for CameraBrand."""
         return ('')
 
     # TODO: Define custom methods here
@@ -86,10 +85,12 @@ class Camera(models.Model):
     """Model definition for Camera."""
 
     # TODO: Define fields here
+    brand = models.ForeignKey(CameraBrand, on_delete=models.CASCADE)
+    model = models.CharField(max_length=50)
 
     class Meta:
         """Meta definition for Camera."""
-
+        db_table = 'camera'
         verbose_name = 'Camera'
         verbose_name_plural = 'Cameras'
 
@@ -112,10 +113,18 @@ class PhotographerProfile(models.Model):
     """Model definition for Photographer."""
 
     # TODO: Define fields here
+    name = models.CharField(max_length=50)
+    profile_photo = models.ImageField()
+    photographer_type = models.ForeignKey(
+        PhotographerType, on_delete=models.CASCADE)
+    photography_type = models.ForeignKey(
+        PhotographyType, on_delete=models.CASCADE)
+    cinemetography = models.BooleanField(default=False)
+    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for Photographer."""
-
+        db_table = 'photographer_profile'
         verbose_name = 'Photographer'
         verbose_name_plural = 'Photographers'
 
@@ -133,30 +142,6 @@ class PhotographerProfile(models.Model):
 
     # TODO: Define custom methods here
 
-    """Model definition for Client."""
-
-    # TODO: Define fields here
-
-    class Meta:
-        """Meta definition for Client."""
-
-        verbose_name = 'Client'
-        verbose_name_plural = 'Clients'
-
-    def __str__(self):
-        """Unicode representation of Client."""
-        pass
-
-    def save(self):
-        """Save method for Client."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for Client."""
-        return ('')
-
-    # TODO: Define custom methods here
-
 
 class ClientProfile(models.Model):
     """Model definition for ClientProfile."""
@@ -165,7 +150,7 @@ class ClientProfile(models.Model):
 
     class Meta:
         """Meta definition for ClientProfile."""
-
+        db_table = 'client_profile'
         verbose_name = 'ClientProfile'
         verbose_name_plural = 'ClientProfiles'
 
@@ -183,51 +168,55 @@ class ClientProfile(models.Model):
 
     # TODO: Define custom methods here
 
-    """Model definition for PhotographerProfile."""
+
+class ProfilePhoto(models.Model):
+    """Model definition for ProfilePhoto."""
 
     # TODO: Define fields here
 
     class Meta:
-        """Meta definition for PhotographerProfile."""
+        """Meta definition for ProfilePhoto."""
 
-        verbose_name = 'PhotographerProfile'
-        verbose_name_plural = 'PhotographerProfiles'
+        db_table = 'profile_photo'
+        verbose_name = 'ProfilePhoto'
+        verbose_name_plural = 'ProfilePhotos'
 
     def __str__(self):
-        """Unicode representation of PhotographerProfile."""
+        """Unicode representation of ProfilePhoto."""
         pass
 
     def save(self):
-        """Save method for PhotographerProfile."""
+        """Save method for ProfilePhoto."""
         pass
 
     def get_absolute_url(self):
-        """Return absolute url for PhotographerProfile."""
+        """Return absolute url for ProfilePhoto."""
         return ('')
 
     # TODO: Define custom methods here
 
 
-class Photo(models.Model):
-    """Model definition for Photo."""
+class ShowcasePhoto(models.Model):
+    """Model definition for ShowcasePhoto."""
 
     # TODO: Define fields here
-    class Meta:
-        """Meta definition for Photo."""
 
-        verbose_name = 'Photo'
-        verbose_name_plural = 'Photos'
+    class Meta:
+        """Meta definition for ShowcasePhoto."""
+        db_table = 'showcase_photo'
+        verbose_name = 'ShowcasePhoto'
+        verbose_name_plural = 'ShowcasePhotos'
 
     def __str__(self):
-        """Unicode representation of Photo."""
+        """Unicode representation of ShowcasePhoto."""
         pass
 
     def save(self):
-        """Save method for Photo."""
+        """Save method for ShowcasePhoto."""
         pass
 
     def get_absolute_url(self):
-        """Return absolute url for Photo."""
+        """Return absolute url for ShowcasePhoto."""
         return ('')
 
     # TODO: Define custom methods here
@@ -240,7 +229,7 @@ class Address(models.Model):
 
     class Meta:
         """Meta definition for Address."""
-
+        db_table = 'address'
         verbose_name = 'Address'
         verbose_name_plural = 'Addresses'
 
@@ -273,7 +262,7 @@ class GPSLocation(models.Model):
 
     class Meta:
         """Meta definition for GPSLocation."""
-
+        db_table = 'gps_location'
         verbose_name = 'GPSLocation'
         verbose_name_plural = 'GPSLocations'
 
@@ -297,10 +286,14 @@ class SecurityInformation(models.Model):
 
     # TODO: Define fields here
     nid = models.CharField(max_length=17)
+    nid_side_1 = models.ImageField()
+    nid_side_2 = models.ImageField()
+    passport_number = models.CharField(max_length=18)
+    birth_certificate = models.CharField(max_length=50)
 
     class Meta:
         """Meta definition for SecurityInformation."""
-
+        db_table = 'security_information'
         verbose_name = 'SecurityInformation'
         verbose_name_plural = 'SecurityInformations'
 
@@ -323,10 +316,14 @@ class PersonalInformation(models.Model):
     """Model definition for PersonalInformation."""
 
     # TODO: Define fields here
+    fathers_name = models.CharField(max_length=50)
+    mothers_name = models.CharField(max_length=50)
+    contact_number = models.CharField(max_length=18)
+    dob = models.DateField(auto_now=False, auto_now_add=False)
 
     class Meta:
         """Meta definition for PersonalInformation."""
-
+        db_table = 'personal_information'
         verbose_name = 'PersonalInformation'
         verbose_name_plural = 'PersonalInformations'
 
