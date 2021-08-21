@@ -290,6 +290,7 @@ class SecurityInformation(models.Model):
     nid_side_2 = models.ImageField()
     passport_number = models.CharField(max_length=18)
     birth_certificate = models.CharField(max_length=50)
+    dob = models.DateField(auto_now=False, auto_now_add=False)
 
     class Meta:
         """Meta definition for SecurityInformation."""
@@ -319,7 +320,6 @@ class PersonalInformation(models.Model):
     fathers_name = models.CharField(max_length=50)
     mothers_name = models.CharField(max_length=50)
     contact_number = models.CharField(max_length=18)
-    dob = models.DateField(auto_now=False, auto_now_add=False)
 
     class Meta:
         """Meta definition for PersonalInformation."""
