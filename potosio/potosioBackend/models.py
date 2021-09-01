@@ -3,6 +3,32 @@ from django.db import models
 # Create your models here.
 
 
+class CameraType(models.Model):
+    """Model definition for CameraType."""
+
+    # TODO: Define fields here
+    camera_type = models.CharField(max_length=10)
+
+    class Meta:
+        """Meta definition for CameraType."""
+        db_table = 'camera_type'
+        verbose_name = 'CameraType'
+        verbose_name_plural = 'CameraType'
+
+    def __str__(self):
+        """Unicode representation of CameraType."""
+        pass
+
+    def save(self):
+        """Save method for CameraType."""
+        pass
+
+    def get_absolute_url(self):
+        """Return absolute url for CameraType."""
+        return ('')
+   # TODO: Define custom methods here
+
+
 class PhotographerType(models.Model):
     """Model definition for PhotographerType."""
 
@@ -26,6 +52,7 @@ class PhotographerType(models.Model):
     def get_absolute_url(self):
         """Return absolute url for PhotographerType."""
         return ('')
+   # TODO: Define custom methods here
 
 
 class PhotographyType(models.Model):
@@ -52,6 +79,7 @@ class PhotographyType(models.Model):
     def get_absolute_url(self):
         """Return absolute url for PhotographyType."""
         return ('')
+   # TODO: Define custom methods here
 
 
 class CameraBrand(models.Model):
@@ -340,3 +368,4 @@ class PersonalInformation(models.Model):
         return ('')
 
     # TODO: Define custom methods here
+
