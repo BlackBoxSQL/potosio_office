@@ -200,7 +200,8 @@ class ClientProfile(models.Model):
     """Model definition for ClientProfile."""
 
     # TODO: Define fields here
-
+    name = models.CharField(max_length=50)
+    profile_photo = models.ImageField()
     class Meta:
         """Meta definition for ClientProfile."""
         db_table = 'client_profile'
