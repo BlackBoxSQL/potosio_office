@@ -7,7 +7,7 @@ class CameraType(models.Model):
     """Model definition for CameraType."""
 
     # TODO: Define fields here
-    camera_type = models.CharField(max_length=10)
+    camera_type = models.CharField(max_length=16)
 
     class Meta:
         """Meta definition for CameraType."""
@@ -60,7 +60,7 @@ class PhotographyType(models.Model):
     """Model definition for PhotographyType."""
 
     # TODO: Define fields here
-    photography_type = models.CharField(max_length=30)
+    photography_type = models.CharField(max_length=13)
 
     class Meta:
         """Meta definition for PhotographyType."""
@@ -86,7 +86,7 @@ class CameraBrand(models.Model):
     """Model definition for CameraBrand."""
 
     # TODO: Define fields here
-    brand = models.CharField(max_length=50)
+    brand = models.CharField(max_length=10)
 
     class Meta:
         """Meta definition for CameraBrand."""
@@ -114,7 +114,7 @@ class Camera(models.Model):
 
     # TODO: Define fields here
     brand = models.ForeignKey(CameraBrand, on_delete=models.CASCADE)
-    model = models.CharField(max_length=50)
+    camera_model = models.CharField(max_length=50)
 
     class Meta:
         """Meta definition for Camera."""
@@ -136,6 +136,31 @@ class Camera(models.Model):
 
     # TODO: Define custom methods here
 
+class Skill(models.Model):
+    """Model definition for Skill."""
+
+    # TODO: Define fields here
+    skill = models.CharField(max_length=12)
+    class Meta:
+        """Meta definition for Skill."""
+
+        verbose_name = 'Skill'
+        verbose_name_plural = 'Skills'
+
+    def __str__(self):
+        """Unicode representation of Skill."""
+        pass
+
+    def save(self):
+        """Save method for Skill."""
+        pass
+
+    def get_absolute_url(self):
+        """Return absolute url for Skill."""
+        return ('')
+
+    # TODO: Define custom methods here
+
 
 class PhotographerProfile(models.Model):
     """Model definition for Photographer."""
@@ -147,7 +172,7 @@ class PhotographerProfile(models.Model):
         PhotographerType, on_delete=models.CASCADE)
     photography_type = models.ForeignKey(
         PhotographyType, on_delete=models.CASCADE)
-    cinemetography = models.BooleanField(default=False)
+    skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
 
     class Meta:
@@ -201,6 +226,7 @@ class ProfilePhoto(models.Model):
     """Model definition for ProfilePhoto."""
 
     # TODO: Define fields here
+    profile_imgae = models.ImageField()
 
     class Meta:
         """Meta definition for ProfilePhoto."""
@@ -228,6 +254,16 @@ class ShowcasePhoto(models.Model):
     """Model definition for ShowcasePhoto."""
 
     # TODO: Define fields here
+    ph1 = models.ImageField()
+    ph2 = models.ImageField()
+    ph3 = models.ImageField()
+    ph4 = models.ImageField()
+    ph5 = models.ImageField()
+    ph6 = models.ImageField()
+    ph7 = models.ImageField()
+    ph8 = models.ImageField()
+    ph9 = models.ImageField()
+    ph10 = models.ImageField()
 
     class Meta:
         """Meta definition for ShowcasePhoto."""
@@ -254,6 +290,9 @@ class Address(models.Model):
     """Model definition for Address."""
 
     # TODO: Define fields here
+    division = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
+
 
     class Meta:
         """Meta definition for Address."""
