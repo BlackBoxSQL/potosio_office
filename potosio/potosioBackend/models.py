@@ -163,7 +163,7 @@ class Skill(models.Model):
 
 
 class PhotographerProfile(models.Model):
-    """Model definition for Photographer."""
+    """Model definition for PhotographerProfile."""
 
     # TODO: Define fields here
     name = models.CharField(max_length=50)
@@ -174,26 +174,26 @@ class PhotographerProfile(models.Model):
         PhotographyType, on_delete=models.CASCADE)
     skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
-
     class Meta:
-        """Meta definition for Photographer."""
+        """Meta definition for PhotographerProfile."""
         db_table = 'photographer_profile'
-        verbose_name = 'Photographer'
-        verbose_name_plural = 'Photographers'
+        verbose_name = 'PhotographerProfile'
+        verbose_name_plural = 'PhotographerProfiles'
 
     def __str__(self):
-        """Unicode representation of Photographer."""
+        """Unicode representation of PhotographerProfile."""
         pass
 
     def save(self):
-        """Save method for Photographer."""
+        """Save method for PhotographerProfile."""
         pass
 
     def get_absolute_url(self):
-        """Return absolute url for Photographer."""
+        """Return absolute url for PhotographerProfile."""
         return ('')
 
     # TODO: Define custom methods here
+
 
 
 class ClientProfile(models.Model):
