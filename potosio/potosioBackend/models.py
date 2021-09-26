@@ -79,7 +79,7 @@ class PhotographyType(models.Model):
     def get_absolute_url(self):
         """Return absolute url for PhotographyType."""
         return ('')
-   # TODO: Define custom methods here
+    # TODO: Define custom methods here
 
 
 class CameraBrand(models.Model):
