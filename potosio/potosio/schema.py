@@ -1,22 +1,23 @@
 import graphene
+from graphene.types import schema
 from graphene_django import DjangoObjectType
 
 from potosioBackend.models import Camera, CameraBrand, CameraType, ProfilePhoto, ClientProfile, PersonalInformation, PhotographerProfile, PhotographerType, PhotographyType, Address, SecurityInformation, ShowcasePhoto, GPSLocation, Skill
 
-class Camera(DjangoObjectType):
+class CameraBrandType(DjangoObjectType):
     class Meta:
-        model = Camera
+        model = CameraBrand
 
 class Query(graphene.ObjectType):
-    cameras = graphene.List(Camera)
-    camera = graphene.Field(Camera, camera_id=graphene.Int(required=True))
+    all_camera_brands = graphene.List(CameraBrandType)
+    camera_brand = graphene.Field(CameraBrandType, id=graphene.Int(required=True))
 
-    def resolve_cameras(self, info, **kwargs):
+    def resolve_all_camera_brands(self, info, **kwargs):
     # Querying a list
-        return Camera.objects.all()
+        return CameraBrand.objects.all()
 
-    def resolve_camera(self, info, camera_id):
+    def resolve_camera_brand(self, info, id):
     # Querying a single question
-        return Camera.objects.get(pk=camera_id)
-
+        return CameraBrand.objects.get(pk=id)
+        
 schema = graphene.Schema(query=Query)

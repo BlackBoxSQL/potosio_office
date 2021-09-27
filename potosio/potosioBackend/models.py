@@ -17,15 +17,8 @@ class CameraType(models.Model):
 
     def __str__(self):
         """Unicode representation of CameraType."""
-        pass
+        return f"{self.camera_type}"
 
-    def save(self):
-        """Save method for CameraType."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for CameraType."""
-        return ('')
    # TODO: Define custom methods here
 
 
@@ -43,15 +36,8 @@ class PhotographerType(models.Model):
 
     def __str__(self):
         """Unicode representation of PhotographerType."""
-        pass
+        return f"{self.photographer_type}"
 
-    def save(self):
-        """Save method for PhotographerType."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for PhotographerType."""
-        return ('')
    # TODO: Define custom methods here
 
 
@@ -70,15 +56,7 @@ class PhotographyType(models.Model):
 
     def __str__(self):
         """Unicode representation of PhotographyType."""
-        pass
-
-    def save(self):
-        """Save method for PhotographyType."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for PhotographyType."""
-        return ('')
+        return f"{self.photography_type}"
     # TODO: Define custom methods here
 
 
@@ -96,15 +74,7 @@ class CameraBrand(models.Model):
 
     def __str__(self):
         """Unicode representation of CameraBrand."""
-        pass
-
-    def save(self):
-        """Save method for CameraBrand."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for CameraBrand."""
-        return ('')
+        return f"{self.brand}"
 
     # TODO: Define custom methods here
 
@@ -114,7 +84,9 @@ class Camera(models.Model):
 
     # TODO: Define fields here
     brand = models.ForeignKey(CameraBrand, on_delete=models.CASCADE)
-    camera_model = models.CharField(max_length=50)
+    camera_type = models.ForeignKey(CameraType, on_delete=models.CASCADE)
+    camera_name = models.CharField(max_length=50)
+    
 
     class Meta:
         """Meta definition for Camera."""
@@ -124,15 +96,8 @@ class Camera(models.Model):
 
     def __str__(self):
         """Unicode representation of Camera."""
-        pass
+        return f"{self.camera_name}"
 
-    def save(self):
-        """Save method for Camera."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for Camera."""
-        return ('')
 
     # TODO: Define custom methods here
 
@@ -149,15 +114,7 @@ class Skill(models.Model):
 
     def __str__(self):
         """Unicode representation of Skill."""
-        pass
-
-    def save(self):
-        """Save method for Skill."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for Skill."""
-        return ('')
+        return f"{self.skill}"
 
     # TODO: Define custom methods here
 
@@ -182,15 +139,7 @@ class PhotographerProfile(models.Model):
 
     def __str__(self):
         """Unicode representation of PhotographerProfile."""
-        pass
-
-    def save(self):
-        """Save method for PhotographerProfile."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for PhotographerProfile."""
-        return ('')
+        return f"{self.name}, {self.photographer_type}"
 
     # TODO: Define custom methods here
 
@@ -210,15 +159,7 @@ class ClientProfile(models.Model):
 
     def __str__(self):
         """Unicode representation of ClientProfile."""
-        pass
-
-    def save(self):
-        """Save method for ClientProfile."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for ClientProfile."""
-        return ('')
+        return f"{self.name}"
 
     # TODO: Define custom methods here
 
@@ -238,15 +179,7 @@ class ProfilePhoto(models.Model):
 
     def __str__(self):
         """Unicode representation of ProfilePhoto."""
-        pass
-
-    def save(self):
-        """Save method for ProfilePhoto."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for ProfilePhoto."""
-        return ('')
+        return f"{self.id}"
 
     # TODO: Define custom methods here
 
@@ -274,15 +207,44 @@ class ShowcasePhoto(models.Model):
 
     def __str__(self):
         """Unicode representation of ShowcasePhoto."""
-        pass
+        return f"{self.id}"
 
-    def save(self):
-        """Save method for ShowcasePhoto."""
-        pass
+    # TODO: Define custom methods here
 
-    def get_absolute_url(self):
-        """Return absolute url for ShowcasePhoto."""
-        return ('')
+
+class Division(models.Model):
+    """Model definition for Division."""
+
+    # TODO: Define fields here
+    division = models.CharField(max_length=50)
+
+    class Meta:
+        """Meta definition for Division."""
+
+        verbose_name = 'Division'
+        verbose_name_plural = 'Divisions'
+
+    def __str__(self):
+        """Unicode representation of Division."""
+        return f"{self.division}"
+
+    # TODO: Define custom methods here
+
+class District(models.Model):
+    """Model definition for District."""
+
+    # TODO: Define fields here
+    district = models.CharField(max_length=50)
+
+    class Meta:
+        """Meta definition for District."""
+
+        verbose_name = 'District'
+        verbose_name_plural = 'Districts'
+
+    def __str__(self):
+        """Unicode representation of District."""
+        return f"{self.district}"
 
     # TODO: Define custom methods here
 
@@ -291,8 +253,9 @@ class Address(models.Model):
     """Model definition for Address."""
 
     # TODO: Define fields here
-    division = models.CharField(max_length=50)
-    district = models.CharField(max_length=50)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE)
+    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    
 
 
     class Meta:
@@ -303,15 +266,7 @@ class Address(models.Model):
 
     def __str__(self):
         """Unicode representation of Address."""
-        pass
-
-    def save(self):
-        """Save method for Address."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for Address."""
-        return ('')
+        return f"{self.id}"
 
     # TODO: Define custom methods here
 
@@ -336,15 +291,7 @@ class GPSLocation(models.Model):
 
     def __str__(self):
         """Unicode representation of GPSLocation."""
-        pass
-
-    def save(self):
-        """Save method for GPSLocation."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for GPSLocation."""
-        return ('')
+        return f"{self.id}"
 
     # TODO: Define custom methods here
 
@@ -353,6 +300,8 @@ class SecurityInformation(models.Model):
     """Model definition for SecurityInformation."""
 
     # TODO: Define fields here
+    fathers_name = models.CharField(max_length=50)
+    mothers_name = models.CharField(max_length=50)
     nid = models.CharField(max_length=17)
     nid_side_1 = models.ImageField()
     nid_side_2 = models.ImageField()
@@ -368,15 +317,7 @@ class SecurityInformation(models.Model):
 
     def __str__(self):
         """Unicode representation of SecurityInformation."""
-        pass
-
-    def save(self):
-        """Save method for SecurityInformation."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for SecurityInformation."""
-        return ('')
+        return f"{self.id}"
 
     # TODO: Define custom methods here
 
@@ -385,8 +326,7 @@ class PersonalInformation(models.Model):
     """Model definition for PersonalInformation."""
 
     # TODO: Define fields here
-    fathers_name = models.CharField(max_length=50)
-    mothers_name = models.CharField(max_length=50)
+    t_shirt_size = models.CharField(max_length=20)
     contact_number = models.CharField(max_length=18)
 
     class Meta:
@@ -397,15 +337,7 @@ class PersonalInformation(models.Model):
 
     def __str__(self):
         """Unicode representation of PersonalInformation."""
-        pass
-
-    def save(self):
-        """Save method for PersonalInformation."""
-        pass
-
-    def get_absolute_url(self):
-        """Return absolute url for PersonalInformation."""
-        return ('')
+        return f"{self.id}"
 
     # TODO: Define custom methods here
 
