@@ -7,16 +7,16 @@ class Camera(DjangoObjectType):
     class Meta:
         model = Camera
 
-class Query:
-    attrs = graphene.List(Camera)
-    attr = graphene.Field(Camera, attr_id=graphene.Int(required=True))
+class Query(graphene.ObjectType):
+    cameras = graphene.List(Camera)
+    camera = graphene.Field(Camera, camera_id=graphene.Int(required=True))
 
-    def resolve_attrs(self, info, **kwargs):
+    def resolve_cameras(self, info, **kwargs):
     # Querying a list
         return Camera.objects.all()
 
-    def resolve_attr(self, info, attr_id):
+    def resolve_camera(self, info, camera_id):
     # Querying a single question
-        return Camera.objects.get(pk=attr_id)
+        return Camera.objects.get(pk=camera_id)
 
 schema = graphene.Schema(query=Query)
