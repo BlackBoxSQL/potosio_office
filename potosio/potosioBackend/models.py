@@ -206,6 +206,10 @@ class PhotographerProfile(models.Model):
     skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
     showcase = models.ForeignKey(ShowcasePhoto, on_delete=models.CASCADE)
+    security_information = models.ForeignKey(SecurityInformation, on_delete=models.CASCADE)
+    personal_information = models.ForeignKey(PersonalInformation, on_delete=models.CASCADE)
+    
+    
 
     class Meta:
         """Meta definition for PhotographerProfile."""
@@ -226,6 +230,10 @@ class ClientProfile(models.Model):
     # TODO: Define fields here
     name = models.CharField(max_length=50)
     profile_photo = models.ImageField()
+    security_information = models.ForeignKey(SecurityInformation, on_delete=models.CASCADE)
+    personal_information = models.ForeignKey(PersonalInformation, on_delete=models.CASCADE)
+    
+
 
     class Meta:
         """Meta definition for ClientProfile."""
