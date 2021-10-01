@@ -3,6 +3,52 @@ from django.db import models
 # Create your models here.
 
 
+class SecurityInformation(models.Model):
+    """Model definition for SecurityInformation."""
+
+    # TODO: Define fields here
+    fathers_name = models.CharField(max_length=50)
+    mothers_name = models.CharField(max_length=50)
+    nid = models.CharField(max_length=17)
+    nid_side_1 = models.ImageField()
+    nid_side_2 = models.ImageField()
+    passport_number = models.CharField(max_length=18)
+    birth_certificate = models.CharField(max_length=50)
+    dob = models.DateField(auto_now=False, auto_now_add=False)
+
+    class Meta:
+        """Meta definition for SecurityInformation."""
+        db_table = 'security_information'
+        verbose_name = 'SecurityInformation'
+        verbose_name_plural = 'SecurityInformations'
+
+    def __str__(self):
+        """Unicode representation of SecurityInformation."""
+        return f"{self.id}"
+
+    # TODO: Define custom methods here
+
+
+class PersonalInformation(models.Model):
+    """Model definition for PersonalInformation."""
+
+    # TODO: Define fields here
+    t_shirt_size = models.CharField(max_length=20)
+    contact_number = models.CharField(max_length=18)
+
+    class Meta:
+        """Meta definition for PersonalInformation."""
+        db_table = 'personal_information'
+        verbose_name = 'PersonalInformation'
+        verbose_name_plural = 'PersonalInformations'
+
+    def __str__(self):
+        """Unicode representation of PersonalInformation."""
+        return f"{self.id}"
+
+    # TODO: Define custom methods here
+
+
 class CameraType(models.Model):
     """Model definition for CameraType."""
 
@@ -83,10 +129,9 @@ class Camera(models.Model):
     """Model definition for Camera."""
 
     # TODO: Define fields here
+    camera_name = models.CharField(max_length=50)
     brand = models.ForeignKey(CameraBrand, on_delete=models.CASCADE)
     camera_type = models.ForeignKey(CameraType, on_delete=models.CASCADE)
-    camera_name = models.CharField(max_length=50)
-    
 
     class Meta:
         """Meta definition for Camera."""
@@ -98,14 +143,15 @@ class Camera(models.Model):
         """Unicode representation of Camera."""
         return f"{self.camera_name}"
 
-
     # TODO: Define custom methods here
+
 
 class Skill(models.Model):
     """Model definition for Skill."""
 
     # TODO: Define fields here
     skill = models.CharField(max_length=12)
+
     class Meta:
         """Meta definition for Skill."""
 
@@ -115,6 +161,34 @@ class Skill(models.Model):
     def __str__(self):
         """Unicode representation of Skill."""
         return f"{self.skill}"
+
+    # TODO: Define custom methods here
+
+
+class ShowcasePhoto(models.Model):
+    """Model definition for ShowcasePhoto."""
+
+    # TODO: Define fields here
+    ph1 = models.ImageField()
+    ph2 = models.ImageField()
+    ph3 = models.ImageField()
+    ph4 = models.ImageField()
+    ph5 = models.ImageField()
+    ph6 = models.ImageField()
+    ph7 = models.ImageField()
+    ph8 = models.ImageField()
+    ph9 = models.ImageField()
+    ph10 = models.ImageField()
+
+    class Meta:
+        """Meta definition for ShowcasePhoto."""
+        db_table = 'showcase_photo'
+        verbose_name = 'ShowcasePhoto'
+        verbose_name_plural = 'ShowcasePhotos'
+
+    def __str__(self):
+        """Unicode representation of ShowcasePhoto."""
+        return f"{self.id}"
 
     # TODO: Define custom methods here
 
@@ -131,6 +205,8 @@ class PhotographerProfile(models.Model):
         PhotographyType, on_delete=models.CASCADE)
     skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
+    showcase = models.ForeignKey(ShowcasePhoto, on_delete=models.CASCADE)
+
     class Meta:
         """Meta definition for PhotographerProfile."""
         db_table = 'photographer_profile'
@@ -144,13 +220,13 @@ class PhotographerProfile(models.Model):
     # TODO: Define custom methods here
 
 
-
 class ClientProfile(models.Model):
     """Model definition for ClientProfile."""
 
     # TODO: Define fields here
     name = models.CharField(max_length=50)
     profile_photo = models.ImageField()
+
     class Meta:
         """Meta definition for ClientProfile."""
         db_table = 'client_profile'
@@ -184,39 +260,11 @@ class ProfilePhoto(models.Model):
     # TODO: Define custom methods here
 
 
-class ShowcasePhoto(models.Model):
-    """Model definition for ShowcasePhoto."""
-
-    # TODO: Define fields here
-    ph1 = models.ImageField()
-    ph2 = models.ImageField()
-    ph3 = models.ImageField()
-    ph4 = models.ImageField()
-    ph5 = models.ImageField()
-    ph6 = models.ImageField()
-    ph7 = models.ImageField()
-    ph8 = models.ImageField()
-    ph9 = models.ImageField()
-    ph10 = models.ImageField()
-
-    class Meta:
-        """Meta definition for ShowcasePhoto."""
-        db_table = 'showcase_photo'
-        verbose_name = 'ShowcasePhoto'
-        verbose_name_plural = 'ShowcasePhotos'
-
-    def __str__(self):
-        """Unicode representation of ShowcasePhoto."""
-        return f"{self.id}"
-
-    # TODO: Define custom methods here
-
-
 class Division(models.Model):
     """Model definition for Division."""
 
     # TODO: Define fields here
-    division = models.CharField(max_length=50)
+    division = models.CharField(max_length=20)
 
     class Meta:
         """Meta definition for Division."""
@@ -230,11 +278,12 @@ class Division(models.Model):
 
     # TODO: Define custom methods here
 
+
 class District(models.Model):
     """Model definition for District."""
 
     # TODO: Define fields here
-    district = models.CharField(max_length=50)
+    district = models.CharField(max_length=30)
 
     class Meta:
         """Meta definition for District."""
@@ -255,8 +304,6 @@ class Address(models.Model):
     # TODO: Define fields here
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
-    
-
 
     class Meta:
         """Meta definition for Address."""
@@ -294,50 +341,3 @@ class GPSLocation(models.Model):
         return f"{self.id}"
 
     # TODO: Define custom methods here
-
-
-class SecurityInformation(models.Model):
-    """Model definition for SecurityInformation."""
-
-    # TODO: Define fields here
-    fathers_name = models.CharField(max_length=50)
-    mothers_name = models.CharField(max_length=50)
-    nid = models.CharField(max_length=17)
-    nid_side_1 = models.ImageField()
-    nid_side_2 = models.ImageField()
-    passport_number = models.CharField(max_length=18)
-    birth_certificate = models.CharField(max_length=50)
-    dob = models.DateField(auto_now=False, auto_now_add=False)
-
-    class Meta:
-        """Meta definition for SecurityInformation."""
-        db_table = 'security_information'
-        verbose_name = 'SecurityInformation'
-        verbose_name_plural = 'SecurityInformations'
-
-    def __str__(self):
-        """Unicode representation of SecurityInformation."""
-        return f"{self.id}"
-
-    # TODO: Define custom methods here
-
-
-class PersonalInformation(models.Model):
-    """Model definition for PersonalInformation."""
-
-    # TODO: Define fields here
-    t_shirt_size = models.CharField(max_length=20)
-    contact_number = models.CharField(max_length=18)
-
-    class Meta:
-        """Meta definition for PersonalInformation."""
-        db_table = 'personal_information'
-        verbose_name = 'PersonalInformation'
-        verbose_name_plural = 'PersonalInformations'
-
-    def __str__(self):
-        """Unicode representation of PersonalInformation."""
-        return f"{self.id}"
-
-    # TODO: Define custom methods here
-
