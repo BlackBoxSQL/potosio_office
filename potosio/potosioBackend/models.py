@@ -21,6 +21,7 @@ class SecurityInformation(models.Model):
         db_table = 'security_information'
         verbose_name = 'SecurityInformation'
         verbose_name_plural = 'SecurityInformations'
+        abstract = True
 
     def __str__(self):
         """Unicode representation of SecurityInformation."""
@@ -33,6 +34,7 @@ class PersonalInformation(models.Model):
     """Model definition for PersonalInformation."""
 
     # TODO: Define fields here
+    name = models.CharField(max_length=50)
     t_shirt_size = models.CharField(max_length=20)
     contact_number = models.CharField(max_length=18)
 
@@ -41,6 +43,7 @@ class PersonalInformation(models.Model):
         db_table = 'personal_information'
         verbose_name = 'PersonalInformation'
         verbose_name_plural = 'PersonalInformations'
+        abstract = True
 
     def __str__(self):
         """Unicode representation of PersonalInformation."""
@@ -193,11 +196,10 @@ class ShowcasePhoto(models.Model):
     # TODO: Define custom methods here
 
 
-class PhotographerProfile(models.Model):
+class PhotographerProfile(SecurityInformation, PersonalInformation):
     """Model definition for PhotographerProfile."""
 
     # TODO: Define fields here
-    name = models.CharField(max_length=50)
     profile_photo = models.ImageField()
     photographer_type = models.ForeignKey(
         PhotographerType, on_delete=models.CASCADE)
@@ -206,10 +208,6 @@ class PhotographerProfile(models.Model):
     skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
     showcase = models.ForeignKey(ShowcasePhoto, on_delete=models.CASCADE)
-    security_information = models.ForeignKey(SecurityInformation, on_delete=models.CASCADE)
-    personal_information = models.ForeignKey(PersonalInformation, on_delete=models.CASCADE)
-    
-    
 
     class Meta:
         """Meta definition for PhotographerProfile."""
@@ -219,21 +217,17 @@ class PhotographerProfile(models.Model):
 
     def __str__(self):
         """Unicode representation of PhotographerProfile."""
-        return f"{self.name}, {self.photographer_type}"
+        return f"{self.name}"
 
     # TODO: Define custom methods here
 
 
-class ClientProfile(models.Model):
+class ClientProfile(SecurityInformation, PersonalInformation):
     """Model definition for ClientProfile."""
 
     # TODO: Define fields here
     name = models.CharField(max_length=50)
     profile_photo = models.ImageField()
-    security_information = models.ForeignKey(SecurityInformation, on_delete=models.CASCADE)
-    personal_information = models.ForeignKey(PersonalInformation, on_delete=models.CASCADE)
-    
-
 
     class Meta:
         """Meta definition for ClientProfile."""
