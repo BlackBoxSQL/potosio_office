@@ -13,6 +13,8 @@ djangorestframework = "^3.12.4"
 Markdown = "^3.3.4"
 django-filter = "^2.4.0"
 Pillow = "^8.3.1"
+django-graphql-jwt = "0.3.0"
+django-graphql-auth = "^0.3.16"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.5.7"

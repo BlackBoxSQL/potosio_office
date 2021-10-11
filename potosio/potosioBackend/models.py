@@ -1,12 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-
-class User(AbstractUser):
-    is_client = models.BooleanField(default=False)
-    is_photographer = models.BooleanField(default=False)
-
 class SecurityInformation(models.Model):
     """Model definition for SecurityInformation."""
 
@@ -177,7 +171,6 @@ class ShowcasePhoto(models.Model):
     """Model definition for ShowcasePhoto."""
 
     # TODO: Define fields here
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     ph1 = models.ImageField()
     ph2 = models.ImageField()
     ph3 = models.ImageField()
@@ -206,7 +199,6 @@ class PhotographerProfile(SecurityInformation, PersonalInformation):
     """Model definition for PhotographerProfile."""
 
     # TODO: Define fields here
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile_photo = models.ImageField()
     photographer_type = models.ForeignKey(
         PhotographerType, on_delete=models.CASCADE)
@@ -233,7 +225,6 @@ class ClientProfile(SecurityInformation, PersonalInformation):
     """Model definition for ClientProfile."""
 
     # TODO: Define fields here
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     profile_photo = models.ImageField()
 
