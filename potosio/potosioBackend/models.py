@@ -1,6 +1,9 @@
 from django.db import models
 
 # Create your models here.
+from users.models import CustomUser
+
+
 class SecurityInformation(models.Model):
     """Model definition for SecurityInformation."""
 
@@ -9,8 +12,8 @@ class SecurityInformation(models.Model):
     fathers_name = models.CharField(max_length=50)
     mothers_name = models.CharField(max_length=50)
     nid = models.CharField(max_length=17)
-    nid_side_1 = models.ImageField()
-    nid_side_2 = models.ImageField()
+    nid_side_1 = models.ImageField(upload_to='images/')
+    nid_side_2 = models.ImageField(upload_to='images/')
     passport_number = models.CharField(max_length=18)
     birth_certificate = models.CharField(max_length=50)
     dob = models.DateField(auto_now=False, auto_now_add=False)
@@ -33,6 +36,7 @@ class PersonalInformation(models.Model):
     """Model definition for PersonalInformation."""
 
     # TODO: Define fields here
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     t_shirt_size = models.CharField(max_length=20)
     contact_number = models.CharField(max_length=18)
 
@@ -151,7 +155,7 @@ class Skill(models.Model):
     """Model definition for Skill."""
 
     # TODO: Define fields here
-    
+
     skill = models.CharField(max_length=12)
 
     class Meta:
@@ -171,16 +175,17 @@ class ShowcasePhoto(models.Model):
     """Model definition for ShowcasePhoto."""
 
     # TODO: Define fields here
-    ph1 = models.ImageField()
-    ph2 = models.ImageField()
-    ph3 = models.ImageField()
-    ph4 = models.ImageField()
-    ph5 = models.ImageField()
-    ph6 = models.ImageField()
-    ph7 = models.ImageField()
-    ph8 = models.ImageField()
-    ph9 = models.ImageField()
-    ph10 = models.ImageField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    ph1 = models.ImageField(upload_to='images/')
+    ph2 = models.ImageField(upload_to='images/')
+    ph3 = models.ImageField(upload_to='images/')
+    ph4 = models.ImageField(upload_to='images/')
+    ph5 = models.ImageField(upload_to='images/')
+    ph6 = models.ImageField(upload_to='images/')
+    ph7 = models.ImageField(upload_to='images/')
+    ph8 = models.ImageField(upload_to='images/')
+    ph9 = models.ImageField(upload_to='images/')
+    ph10 = models.ImageField(upload_to='images/')
 
     class Meta:
         """Meta definition for ShowcasePhoto."""
@@ -199,7 +204,8 @@ class PhotographerProfile(SecurityInformation, PersonalInformation):
     """Model definition for PhotographerProfile."""
 
     # TODO: Define fields here
-    profile_photo = models.ImageField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    profile_photo = models.ImageField(upload_to='images/')
     photographer_type = models.ForeignKey(
         PhotographerType, on_delete=models.CASCADE)
     photography_type = models.ForeignKey(
@@ -226,7 +232,7 @@ class ClientProfile(SecurityInformation, PersonalInformation):
 
     # TODO: Define fields here
     name = models.CharField(max_length=50)
-    profile_photo = models.ImageField()
+    profile_photo = models.ImageField(upload_to='images/')
 
     class Meta:
         """Meta definition for ClientProfile."""
@@ -245,7 +251,7 @@ class ProfilePhoto(models.Model):
     """Model definition for ProfilePhoto."""
 
     # TODO: Define fields here
-    profile_imgae = models.ImageField()
+    profile_imgae = models.ImageField(upload_to='images/')
 
     class Meta:
         """Meta definition for ProfilePhoto."""
@@ -299,10 +305,31 @@ class District(models.Model):
     # TODO: Define custom methods here
 
 
+class PoliceStation(models.Model):
+    """Model definition for PoliceStation."""
+
+    # TODO: Define fields here
+    police_station = models.CharField(max_length=30)
+
+    class Meta:
+        """Meta definition for PoliceStation."""
+
+        verbose_name = 'PoliceStation'
+        verbose_name_plural = 'PoliceStations'
+
+    def __str__(self):
+        """Unicode representation of PoliceStation."""
+        pass
+
+    # TODO: Define custom methods here
+
+
 class Address(models.Model):
     """Model definition for Address."""
 
     # TODO: Define fields here
+    police_station = models.ForeignKey(
+        PoliceStation, on_delete=models.CASCADE)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
 
@@ -314,31 +341,6 @@ class Address(models.Model):
 
     def __str__(self):
         """Unicode representation of Address."""
-        return f"{self.id}"
-
-    # TODO: Define custom methods here
-
-
-class GPSLocation(models.Model):
-    """Model definition for Location."""
-
-    # TODO: Define fields here
-    latitude = models.DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True)
-
-    longitude = models.DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True)
-
-    created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
-
-    class Meta:
-        """Meta definition for GPSLocation."""
-        db_table = 'gps_location'
-        verbose_name = 'GPSLocation'
-        verbose_name_plural = 'GPSLocations'
-
-    def __str__(self):
-        """Unicode representation of GPSLocation."""
         return f"{self.id}"
 
     # TODO: Define custom methods here

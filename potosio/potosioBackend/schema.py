@@ -1,11 +1,13 @@
 import graphene
 from graphene.types import schema
 from graphene_django import DjangoObjectType
-from potosioBackend.models import Camera, CameraBrand, CameraType, ProfilePhoto, ClientProfile, PersonalInformation, PhotographerProfile, PhotographerType, PhotographyType, Address, SecurityInformation, ShowcasePhoto, GPSLocation, Skill
+from potosioBackend.models import Camera, CameraBrand, CameraType, ProfilePhoto, ClientProfile, PersonalInformation, PhotographerProfile, PhotographerType, PhotographyType, Address, SecurityInformation, ShowcasePhoto, Skill
+
 
 class CameraBrandType(DjangoObjectType):
     class Meta:
         model = CameraBrand
+
 
 class CameraQuery(graphene.ObjectType):
     camerabrand = graphene.List(CameraBrandType)
