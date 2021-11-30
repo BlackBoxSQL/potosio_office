@@ -2,10 +2,14 @@ import graphene
 from graphql_auth import mutations
 from graphene.types import schema
 from graphene_django import DjangoObjectType
+from graphene_django.types import DjangoObjectType
 from graphql_auth.schema import UserQuery, MeQuery
-import potosioBackend.schema
-class Query(UserQuery, MeQuery, potosioBackend.schema.CameraQuery, graphene.ObjectType):
+from potosioBackend.schema import CameraBrandQuery, CameraTypeQuery
+
+
+class Query(UserQuery, MeQuery, CameraBrandQuery, CameraTypeQuery, graphene.ObjectType):
     pass
+
 
 class AuthMutation(graphene.ObjectType):
     register = mutations.Register.Field()
@@ -27,7 +31,9 @@ class AuthMutation(graphene.ObjectType):
     refresh_token = mutations.RefreshToken.Field()
     revoke_token = mutations.RevokeToken.Field()
 
-class Mutation(AuthMutation,graphene.ObjectType):
-   pass
+
+class Mutation(AuthMutation, graphene.ObjectType):
+    pass
+
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
