@@ -1,9 +1,12 @@
 import graphene
-from graphene.types import schema
 from graphene_django import DjangoObjectType
-from potosioBackend.models import Camera, CameraBrand, CameraType, ProfilePhoto, ClientProfile, PersonalInformation, PhotographerProfile, PhotographerType, PhotographyType, Address, SecurityInformation, ShowcasePhoto, Skill
-
 from graphene_django.types import DjangoObjectType
+
+from potosioBackend.models import (Address, Camera, CameraBrand, CameraType,
+                                   ClientProfile, PersonalInformation,
+                                   PhotographerProfile, PhotographerType,
+                                   PhotographyType,
+                                   SecurityInformation, Skill)
 
 
 class CameraBrandType(DjangoObjectType):
@@ -34,6 +37,7 @@ class CameraBrandQuery(graphene.ObjectType):
     camerabrand_by_id = graphene.Field(CameraBrandType, id=graphene.String())
     camerabrand_by_name = graphene.List(
         CameraBrandType, name=graphene.String())
+    total_brand = graphene.Int()
 
     def resolve_camerabrand(root, info, **kwargs):
         # Querying a list
@@ -46,3 +50,6 @@ class CameraBrandQuery(graphene.ObjectType):
     def resolve_camerabrand_by_name(root, info, name):
         # Querying a single question
         return CameraBrand.objects.all().filter(brand=name)
+
+    def resolve_total_brand(root, info):
+        return CameraBrand.objects.count()

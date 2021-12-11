@@ -1,7 +1,28 @@
 import graphene
-
+from graphene.types import schema
+from graphene_django import DjangoObjectType
+from graphene_django.types import DjangoObjectType
 from graphql_auth.schema import UserQuery, MeQuery
 from graphql_auth import mutations
+from .models import CustomUser
+
+
+class CustomUserType(DjangoObjectType):
+    class Meta:
+        model = CustomUser
+
+
+class CustomUserQuery(graphene.ObjectType):
+    all_users = graphene.List(CustomUserType)
+    users_by_type = graphene.List(
+        CustomUserType, usertype=graphene.String())
+
+    def resolve_all_users(self, info, **kwargs):
+        return CustomUser.objects.all()
+
+    def resolve_users_by_type(root, info, usertype):
+        # Querying a single question
+        return CustomUser.objects.all().filter(user_type=usertype)
 
 
 class Query(UserQuery, MeQuery, graphene.ObjectType):

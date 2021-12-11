@@ -1,7 +1,112 @@
+from django import db
 from django.db import models
-
 # Create your models here.
-from users.models import CustomUser
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
+
+
+class Division(models.Model):
+    """Model definition for Division."""
+
+    # TODO: Define fields here
+    division = models.CharField(max_length=15)
+
+    class Meta:
+        """Meta definition for Division."""
+        db_table = 'division'
+        verbose_name = 'Division'
+        verbose_name_plural = 'Divisions'
+
+    def __str__(self):
+        """Unicode representation of Division."""
+        return f"{self.division}"
+
+    # TODO: Define custom methods here
+
+
+class District(models.Model):
+    """Model definition for District."""
+
+    # TODO: Define fields here
+    division = models.ForeignKey(Division, on_delete=models.CASCADE)
+    district = models.CharField(max_length=20)
+
+    class Meta:
+        """Meta definition for District."""
+        db_table = 'district'
+        verbose_name = 'District'
+        verbose_name_plural = 'Districts'
+
+    def __str__(self):
+        """Unicode representation of District."""
+        return f"{self.district}"
+
+    # TODO: Define custom methods here
+
+
+class Upazila(models.Model):
+    """Model definition for PoliceStation."""
+
+    # TODO: Define fields here
+    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    upazila = models.CharField(max_length=30)
+
+    class Meta:
+        """Meta definition for PoliceStation."""
+        db_table = 'upazila'
+        verbose_name = 'Upazila'
+        verbose_name_plural = 'Upazilas'
+
+    def __str__(self):
+        """Unicode representation of PoliceStation."""
+        return f"{self.upazila}"
+
+    # TODO: Define custom methods here
+
+
+class Union(models.Model):
+    """Model definition for Union."""
+
+    # TODO: Define fields here
+    upazila = models.ForeignKey(Upazila, on_delete=models.CASCADE)
+    union = models.CharField(max_length=30)
+
+    class Meta:
+        """Meta definition for Union."""
+        db_table = 'union'
+        verbose_name = 'Union'
+        verbose_name_plural = 'Unions'
+
+    def __str__(self):
+        """Unicode representation of Union."""
+        return f"{self.union}"
+
+    # TODO: Define custom methods here
+
+
+class Address(models.Model):
+    """Model definition for Address."""
+
+    # TODO: Define fields here
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE)
+    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    upazila = models.ForeignKey(
+        Upazila, on_delete=models.CASCADE)
+    union = models.ForeignKey(Union, on_delete=models.CASCADE)
+
+    class Meta:
+        """Meta definition for Address."""
+        db_table = 'address'
+        verbose_name = 'Address'
+        verbose_name_plural = 'Addresses'
+
+    def __str__(self):
+        """Unicode representation of Address."""
+        return f"{self.id}"
+
+    # TODO: Define custom methods here
 
 
 class SecurityInformation(models.Model):
@@ -34,10 +139,17 @@ class SecurityInformation(models.Model):
 
 class PersonalInformation(models.Model):
     """Model definition for PersonalInformation."""
-
+    T_SHIRT_SIZE_CHOICES = (
+        ('S', 'S'),
+        ('M', 'M'),
+        ('L', 'L'),
+        ('XL', 'XL'),
+        ('XXL', 'XXL'),
+    )
     # TODO: Define fields here
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    t_shirt_size = models.CharField(max_length=20)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    t_shirt_size = models.CharField(
+        max_length=5, choices=T_SHIRT_SIZE_CHOICES)
     contact_number = models.CharField(max_length=18)
 
     class Meta:
@@ -97,7 +209,7 @@ class PhotographyType(models.Model):
     """Model definition for PhotographyType."""
 
     # TODO: Define fields here
-    photography_type = models.CharField(max_length=13)
+    photography_type = models.CharField(max_length=15)
 
     class Meta:
         """Meta definition for PhotographyType."""
@@ -134,7 +246,7 @@ class Camera(models.Model):
     """Model definition for Camera."""
 
     # TODO: Define fields here
-    camera_name = models.CharField(max_length=50)
+    model_name = models.CharField(max_length=50)
     brand = models.ForeignKey(CameraBrand, on_delete=models.CASCADE)
     camera_type = models.ForeignKey(CameraType, on_delete=models.CASCADE)
 
@@ -160,7 +272,7 @@ class Skill(models.Model):
 
     class Meta:
         """Meta definition for Skill."""
-
+        db_table = 'skill'
         verbose_name = 'Skill'
         verbose_name_plural = 'Skills'
 
@@ -171,11 +283,19 @@ class Skill(models.Model):
     # TODO: Define custom methods here
 
 
-class ShowcasePhoto(models.Model):
-    """Model definition for ShowcasePhoto."""
+class PhotographerProfile(SecurityInformation, PersonalInformation):
+    """Model definition for PhotographerProfile."""
 
     # TODO: Define fields here
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile_photo = models.ImageField(upload_to='images/profilephoto/')
+    photographer_type = models.ForeignKey(
+        PhotographerType, on_delete=models.CASCADE)
+    photography_type = models.ForeignKey(
+        PhotographyType, on_delete=models.CASCADE)
+    skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
+    charges_per_day = models.IntegerField()
     ph1 = models.ImageField(upload_to='images/')
     ph2 = models.ImageField(upload_to='images/')
     ph3 = models.ImageField(upload_to='images/')
@@ -186,33 +306,6 @@ class ShowcasePhoto(models.Model):
     ph8 = models.ImageField(upload_to='images/')
     ph9 = models.ImageField(upload_to='images/')
     ph10 = models.ImageField(upload_to='images/')
-
-    class Meta:
-        """Meta definition for ShowcasePhoto."""
-        db_table = 'showcase_photo'
-        verbose_name = 'ShowcasePhoto'
-        verbose_name_plural = 'ShowcasePhotos'
-
-    def __str__(self):
-        """Unicode representation of ShowcasePhoto."""
-        return f"{self.id}"
-
-    # TODO: Define custom methods here
-
-
-class PhotographerProfile(SecurityInformation, PersonalInformation):
-    """Model definition for PhotographerProfile."""
-
-    # TODO: Define fields here
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    profile_photo = models.ImageField(upload_to='images/')
-    photographer_type = models.ForeignKey(
-        PhotographerType, on_delete=models.CASCADE)
-    photography_type = models.ForeignKey(
-        PhotographyType, on_delete=models.CASCADE)
-    skills = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
-    showcase = models.ForeignKey(ShowcasePhoto, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for PhotographerProfile."""
@@ -227,12 +320,32 @@ class PhotographerProfile(SecurityInformation, PersonalInformation):
     # TODO: Define custom methods here
 
 
+class ClientType(models.Model):
+    """Model definition for ClientType."""
+
+    # TODO: Define fields here
+    client_type = models.CharField(max_length=20)
+
+    class Meta:
+        """Meta definition for ClientType."""
+        db_table = 'client_type'
+        verbose_name = 'ClientType'
+        verbose_name_plural = 'ClientTypes'
+
+    def __str__(self):
+        """Unicode representation of ClientType."""
+        return f"{self.client_type}"
+
+    # TODO: Define custom methods here
+
+
 class ClientProfile(SecurityInformation, PersonalInformation):
     """Model definition for ClientProfile."""
 
     # TODO: Define fields here
     name = models.CharField(max_length=50)
     profile_photo = models.ImageField(upload_to='images/')
+    client_type = models.ForeignKey(ClientType, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for ClientProfile."""
@@ -243,104 +356,5 @@ class ClientProfile(SecurityInformation, PersonalInformation):
     def __str__(self):
         """Unicode representation of ClientProfile."""
         return f"{self.name}"
-
-    # TODO: Define custom methods here
-
-
-class ProfilePhoto(models.Model):
-    """Model definition for ProfilePhoto."""
-
-    # TODO: Define fields here
-    profile_imgae = models.ImageField(upload_to='images/')
-
-    class Meta:
-        """Meta definition for ProfilePhoto."""
-
-        db_table = 'profile_photo'
-        verbose_name = 'ProfilePhoto'
-        verbose_name_plural = 'ProfilePhotos'
-
-    def __str__(self):
-        """Unicode representation of ProfilePhoto."""
-        return f"{self.id}"
-
-    # TODO: Define custom methods here
-
-
-class Division(models.Model):
-    """Model definition for Division."""
-
-    # TODO: Define fields here
-    division = models.CharField(max_length=20)
-
-    class Meta:
-        """Meta definition for Division."""
-
-        verbose_name = 'Division'
-        verbose_name_plural = 'Divisions'
-
-    def __str__(self):
-        """Unicode representation of Division."""
-        return f"{self.division}"
-
-    # TODO: Define custom methods here
-
-
-class District(models.Model):
-    """Model definition for District."""
-
-    # TODO: Define fields here
-    district = models.CharField(max_length=30)
-
-    class Meta:
-        """Meta definition for District."""
-
-        verbose_name = 'District'
-        verbose_name_plural = 'Districts'
-
-    def __str__(self):
-        """Unicode representation of District."""
-        return f"{self.district}"
-
-    # TODO: Define custom methods here
-
-
-class PoliceStation(models.Model):
-    """Model definition for PoliceStation."""
-
-    # TODO: Define fields here
-    police_station = models.CharField(max_length=30)
-
-    class Meta:
-        """Meta definition for PoliceStation."""
-
-        verbose_name = 'PoliceStation'
-        verbose_name_plural = 'PoliceStations'
-
-    def __str__(self):
-        """Unicode representation of PoliceStation."""
-        pass
-
-    # TODO: Define custom methods here
-
-
-class Address(models.Model):
-    """Model definition for Address."""
-
-    # TODO: Define fields here
-    police_station = models.ForeignKey(
-        PoliceStation, on_delete=models.CASCADE)
-    division = models.ForeignKey(Division, on_delete=models.CASCADE)
-    district = models.ForeignKey(District, on_delete=models.CASCADE)
-
-    class Meta:
-        """Meta definition for Address."""
-        db_table = 'address'
-        verbose_name = 'Address'
-        verbose_name_plural = 'Addresses'
-
-    def __str__(self):
-        """Unicode representation of Address."""
-        return f"{self.id}"
 
     # TODO: Define custom methods here

@@ -5,9 +5,10 @@ from graphene_django import DjangoObjectType
 from graphene_django.types import DjangoObjectType
 from graphql_auth.schema import UserQuery, MeQuery
 from potosioBackend.schema import CameraBrandQuery, CameraTypeQuery
+from users.schema import CustomUserQuery
 
 
-class Query(UserQuery, MeQuery, CameraBrandQuery, CameraTypeQuery, graphene.ObjectType):
+class Query(UserQuery, CustomUserQuery, MeQuery, CameraBrandQuery, CameraTypeQuery, graphene.ObjectType):
     pass
 
 
