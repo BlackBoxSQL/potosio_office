@@ -1,9 +1,7 @@
 from django import db
-from django.db import models
-# Create your models here.
 from django.conf import settings
-
 from django.contrib.auth import get_user_model
+from django.db import models
 
 
 class Division(models.Model):

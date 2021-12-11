@@ -5,8 +5,7 @@ from graphene_django.types import DjangoObjectType
 from potosioBackend.models import (Address, Camera, CameraBrand, CameraType,
                                    ClientProfile, PersonalInformation,
                                    PhotographerProfile, PhotographerType,
-                                   PhotographyType,
-                                   SecurityInformation, Skill)
+                                   PhotographyType, SecurityInformation, Skill)
 
 
 class CameraBrandType(DjangoObjectType):
