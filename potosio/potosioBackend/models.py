@@ -3,14 +3,14 @@ from django.db import models
 # Create your models here.
 from django.conf import settings
 
-User = settings.AUTH_USER_MODEL
+from django.contrib.auth import get_user_model
 
 
 class Division(models.Model):
     """Model definition for Division."""
 
     # TODO: Define fields here
-    division = models.CharField(max_length=15)
+    division = models.CharField(max_length=35)
 
     class Meta:
         """Meta definition for Division."""
@@ -30,7 +30,7 @@ class District(models.Model):
 
     # TODO: Define fields here
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
-    district = models.CharField(max_length=20)
+    district = models.CharField(max_length=35)
 
     class Meta:
         """Meta definition for District."""
@@ -50,7 +50,7 @@ class Upazila(models.Model):
 
     # TODO: Define fields here
     district = models.ForeignKey(District, on_delete=models.CASCADE)
-    upazila = models.CharField(max_length=30)
+    upazila = models.CharField(max_length=35)
 
     class Meta:
         """Meta definition for PoliceStation."""
@@ -70,7 +70,7 @@ class Union(models.Model):
 
     # TODO: Define fields here
     upazila = models.ForeignKey(Upazila, on_delete=models.CASCADE)
-    union = models.CharField(max_length=30)
+    union = models.CharField(max_length=35)
 
     class Meta:
         """Meta definition for Union."""
@@ -89,7 +89,7 @@ class Address(models.Model):
     """Model definition for Address."""
 
     # TODO: Define fields here
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     upazila = models.ForeignKey(
@@ -147,7 +147,7 @@ class PersonalInformation(models.Model):
         ('XXL', 'XXL'),
     )
     # TODO: Define fields here
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     t_shirt_size = models.CharField(
         max_length=5, choices=T_SHIRT_SIZE_CHOICES)
     contact_number = models.CharField(max_length=18)
@@ -287,7 +287,7 @@ class PhotographerProfile(SecurityInformation, PersonalInformation):
     """Model definition for PhotographerProfile."""
 
     # TODO: Define fields here
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to='images/profilephoto/')
     photographer_type = models.ForeignKey(
         PhotographerType, on_delete=models.CASCADE)
