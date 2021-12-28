@@ -1,23 +1,13 @@
 [tool.poetry]
-name = "potosio"
-version = "0.1.0"
+name = "potosio_office"
+version = "0.1.1"
 description = "backend of potosio"
-authors = ["BlackBoxSQL <pythonboy007@gmail.com>"]
-license = "MIT"
+authors = ["blackboxsql <pythonboy007@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
-Django = "^3.2.5"
-graphene-django = "^2.15.0"
-djangorestframework = "^3.12.4"
-Markdown = "^3.3.4"
-django-filter = "^2.4.0"
-Pillow = "^8.3.1"
-django-graphql-jwt = "0.3.0"
-django-graphql-auth = "^0.3.16"
+python = "^3.10"
 
 [tool.poetry.dev-dependencies]
-autopep8 = "^1.5.7"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
